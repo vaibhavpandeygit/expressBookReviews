@@ -6,9 +6,29 @@ const public_users = express.Router();
 
 
 public_users.post("/register", (req,res) => {
-  //Write your code here
+
+  const {username,password} = req.body
+  const existingUser = isValid(username);
+
+  if(!existingUser){
+    users.push({
+      username: username,
+      password: password
+    })
+    res.status(201).send({
+      message: "User Registered Successfully, Now You Can Login"
+    })
+  }
+  else{
+    return res.send({message: "Allready registered"})
+  }
   
 });
+
+//get all the users 
+public_users.get('/getusers',(req,res)=>{
+  res.send(users)
+})
 
 // Get the book list available in the shop
 public_users.get('/',function (req, res) {
